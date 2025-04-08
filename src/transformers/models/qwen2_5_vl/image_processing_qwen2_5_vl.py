@@ -59,19 +59,20 @@ def smart_resize(
 ):
     """Rescales the image so that the following conditions are met:
 
-    1. Both dimensions (height and width) are divisible by 'factor'.
+    1. ~Both dimensions (height and width) are divisible by 'factor'~.
+        Dimensions are at least factor
 
     2. The total number of pixels is within the range ['min_pixels', 'max_pixels'].
 
     3. The aspect ratio of the image is maintained as closely as possible.
 
     """
-    if height < factor or width < factor:
-        raise ValueError(f"height:{height} or width:{width} must be larger than factor:{factor}")
-    elif max(height, width) / min(height, width) > 200:
+    if max(height, width) / min(height, width) > 200:
         raise ValueError(
             f"absolute aspect ratio must be smaller than 200, got {max(height, width) / min(height, width)}"
         )
+    height = max(height, factor)
+    width  = max(width, factor)
     h_bar = round(height / factor) * factor
     w_bar = round(width / factor) * factor
     if h_bar * w_bar > max_pixels:
