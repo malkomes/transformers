@@ -241,7 +241,7 @@ class Qwen2_5_VLImageProcessor(BaseImageProcessor):
                 image = resize(
                     image, size=(resized_height, resized_width), resample=resample, input_data_format=input_data_format
                 )
-                logger.info(f"[ImageProcessorQ2.5vl] Resized from {(height, width)} to {(resized_height, resized_width)}")
+                print(f"[ImageProcessorQ2.5vl] Resized from {(height, width)} to {(resized_height, resized_width)}")
 
             if do_rescale:
                 image = self.rescale(image, scale=rescale_factor, input_data_format=input_data_format)
