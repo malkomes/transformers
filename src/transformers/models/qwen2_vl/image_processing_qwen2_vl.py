@@ -221,6 +221,7 @@ class Qwen2VLImageProcessor(BaseImageProcessor):
         height, width = get_image_size(images[0], channel_dim=input_data_format)
         resized_height, resized_width = height, width
         processed_images = []
+        do_resize = True
         for image in images:
             if do_resize:
                 resized_height, resized_width = smart_resize(
