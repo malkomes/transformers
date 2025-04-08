@@ -231,7 +231,7 @@ class Qwen2VLImageProcessor(BaseImageProcessor):
                     min_pixels=self.min_pixels,
                     max_pixels=self.max_pixels,
                 )
-                logger.info(f"[ImageProcessor] Resized from {(height, width)} to {(resized_height, resized_width)}")
+                logger.info(f"[ImageProcessorQ2vl] Resized from {(height, width)} to {(resized_height, resized_width)}")
                 image = resize(
                     image, size=(resized_height, resized_width), resample=resample, input_data_format=input_data_format
                 )

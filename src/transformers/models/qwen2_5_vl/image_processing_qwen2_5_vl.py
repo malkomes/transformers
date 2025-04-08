@@ -229,17 +229,19 @@ class Qwen2_5_VLImageProcessor(BaseImageProcessor):
         resized_height, resized_width = height, width
         processed_images = []
         for image in images:
+            do_resize = True
             if do_resize:
                 resized_height, resized_width = smart_resize(
                     height,
                     width,
-                    factor=self.patch_size * self.merge_size,
+                    factor=112,
                     min_pixels=self.min_pixels,
                     max_pixels=self.max_pixels,
                 )
                 image = resize(
                     image, size=(resized_height, resized_width), resample=resample, input_data_format=input_data_format
                 )
+                logger.info(f"[ImageProcessorQ2.5vl] Resized from {(height, width)} to {(resized_height, resized_width)}")
 
             if do_rescale:
                 image = self.rescale(image, scale=rescale_factor, input_data_format=input_data_format)
