@@ -226,10 +226,11 @@ class Qwen2VLImageProcessor(BaseImageProcessor):
                 resized_height, resized_width = smart_resize(
                     height,
                     width,
-                    factor=self.patch_size * self.merge_size,
+                    factor=112,
                     min_pixels=self.min_pixels,
                     max_pixels=self.max_pixels,
                 )
+                logger.info(f"[ImageProcessor] Resized from {(height, width)} to {(resized_height, resized_width)}")
                 image = resize(
                     image, size=(resized_height, resized_width), resample=resample, input_data_format=input_data_format
                 )
