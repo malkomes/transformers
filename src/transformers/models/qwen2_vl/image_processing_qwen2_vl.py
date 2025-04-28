@@ -58,19 +58,20 @@ def smart_resize(
 ):
     """Rescales the image so that the following conditions are met:
 
-    1. Both dimensions (height and width) are divisible by 'factor'.
+    1. ~Both dimensions (height and width) are divisible by 'factor'~.
+        Dimensions are at least factor
 
     2. The total number of pixels is within the range ['min_pixels', 'max_pixels'].
 
     3. The aspect ratio of the image is maintained as closely as possible.
 
     """
-    if height < factor or width < factor:
-        raise ValueError(f"height:{height} or width:{width} must be larger than factor:{factor}")
-    elif max(height, width) / min(height, width) > 200:
+    if max(height, width) / min(height, width) > 200:
         raise ValueError(
             f"absolute aspect ratio must be smaller than 200, got {max(height, width) / min(height, width)}"
         )
+    height = max(height, factor)
+    width  = max(width, factor)
     h_bar = round(height / factor) * factor
     w_bar = round(width / factor) * factor
     if h_bar * w_bar > max_pixels:
@@ -231,7 +232,7 @@ class Qwen2VLImageProcessor(BaseImageProcessor):
                     min_pixels=self.min_pixels,
                     max_pixels=self.max_pixels,
                 )
-                logger.info(f"[ImageProcessorQ2vl] Resized from {(height, width)} to {(resized_height, resized_width)}")
+                logger.info(f"[Qwen2VLImageProcessor] smart_resize: before {(height, width)} after {(resized_height, resized_width)}")
                 image = resize(
                     image, size=(resized_height, resized_width), resample=resample, input_data_format=input_data_format
                 )
